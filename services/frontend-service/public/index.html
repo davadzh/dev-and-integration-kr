@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Service</title>
+  </head>
+  <script>
+    async function sendRequest() {
+      try {
+          // Отправляем запрос на бэкенд
+          const response = await fetch('http://127.0.0.1:8080/api', {
+              method: 'GET'
+          });
+
+          // Проверяем успешность ответа
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          // Читаем JSON-ответ от сервера
+          const data = await response.json();
+
+          // Записываем данные из свойства "data" в тег <p>
+          document.getElementById('response').textContent = data.data;
+      } catch (error) {
+          // В случае ошибки записываем сообщение об ошибке
+          document.getElementById('response').textContent = `Ошибка: ${error.message}`;
+      }
+    }
+  </script>
+  <body>
+      <h1>Frontend сервис</h1>
+      
+      <h3>Отправить запрос на Backend сервис</h3>
+      <button onclick="sendRequest()">Отправить</button>
+
+      <p><b>Данные</b>: <span id="response"></span></p>
+  </body>
+</html>
